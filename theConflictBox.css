@@ -1,0 +1,153 @@
+
+.left{float: left;}
+.right{float: right;}
+.clear{clear: both;}
+
+.red{} /* border: 1px solid #F00; */
+
+/* 
+	Fra js-filen: "on(click)"
+	.ImgWrapper, #AntagonistArrow, #ProtagonistArrow, #box1_overlay_blue, #box2_overlay_blue, #box3_overlay_red, #box4_overlay_red 
+*/
+
+.box{	width: 47%; 
+		height: 42%; 
+		padding: 0px; 
+		display: inline-block;
+		pointer-events: none;
+        cursor:pointer;   /* IPAD-work-around til at faa div's til at lukke!!! */
+	} /* VIGTIGT: Padding skal være nul pga JQuery offset */
+
+.clickbg{	/*background-color: #f8f8f6; */
+			background-color: #fff;
+			width: 89%;    /* width: 90%; */
+			height: 80%;   /* height: 80%; */
+			margin: 6% 4% 4% 6%;  /* margin: 4% */
+			text-align: center; 
+			padding-top: 10%;
+			cursor:pointer;   /* IPAD-work-around til at faa div's til at lukke!!! */
+			/*display: none;*/
+		}
+/*
+#box1 .BoxText{padding: 20% 30% 4% 4%;}
+#box2 .BoxText{padding: 10% 4% 4% 30%;}
+#box3 .BoxText{padding: 20% 30% 4% 4%;}
+#box4 .BoxText{padding: 10% 4% 4% 30%;}
+*/
+#box1_overlay_blue, #box2_overlay_blue {
+				    position: fixed;
+				    top: 0;
+				    left: 0;
+				    height: 100%;
+				    width: 100%;
+				    background-color: rgba(29,166,219,0.2);
+				    z-index: 5;
+				    display: none;
+				    cursor:pointer;   /* IPAD-work-around til at faa div's til at lukke!!! */
+				}
+
+#box3_overlay_red, #box4_overlay_red {
+				    position: fixed;
+				    top: 0;
+				    left: 0;
+				    height: 100%;
+				    width: 100%;
+				    background-color: rgba(226,134,134,0.2);
+				    z-index: 5;
+				    display: none;
+				    cursor:pointer;   /* IPAD-work-around til at faa div's til at lukke!!! */
+				}
+ 
+.mt17{margin-top: 1.7%;}
+.mt45{margin-top: 4.5%;}
+
+.ml15{margin-left: 1.5%;}
+.ml45{margin-left: 4.5%;}
+
+#AntagonistArrow{	background-image: url("images/conflictbox_redarrow@x2.png");
+					background-repeat:no-repeat;
+					background-size:contain;
+				    background-position:center;
+				    margin-left: auto;
+					margin-right: auto;
+				    z-index: 11; 
+				   /* border: 1px solid #F00; */
+				    display: none;
+				    pointer-events: none;
+				}
+
+#ProtagonistArrow{	background-image: url("images/conflictbox_bluearrow@x2.png");
+					background-repeat:no-repeat;
+					background-size:contain;
+				    background-position:center;
+				    margin-left: auto;
+					margin-right: auto;
+				    z-index: 10; 
+				   /* border: 1px solid #F00; */
+				    display: none;
+				    pointer-events: none;
+				}
+
+
+.ImgWrapper{ 
+    /*
+      Responsive baggrundsbilleder, se:
+      http://stackoverflow.com/questions/12609110/responsive-css-background-images
+     */
+    /*background-image: url("../images/conflictbox_cleared@x2.png");*/
+    background-image: url("images/conflictbox_text@x2.png");
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-position:center;
+    margin-left: auto; margin-right: auto;
+    width: 100%;  
+    position: relative; 
+    /* border: 1px solid #F00; */
+}
+
+#pdfimglink{color: #0071bc;}
+#pdfimglink img{display: inherit;}
+#pdfimglink span{margin-left: 8px; vertical-align: middle;}
+
+
+.conflict-content{max-width: 650px; margin:0 auto; }
+/*.container-fluid{max-width: 650px; }*/
+
+.col-xs-12{position: inherit;}  /* Dette fixer problemet med positionering af overlays når klasserne "col-XX-YY" anvendes. */
+
+/*
+=======================================================
+*/
+
+/* 
+	mobile breakpoints in bootstrap: < 480, 480 > 768, 768 > 992, 992 > 1200, > 1200 
+	http://stackoverflow.com/questions/19592968/bootstrap-3-breakpoints-and-media-queries
+*/
+
+/*@media (max-width: 350px) {
+     .box{font-size: 50%; color: #F00;}
+}
+
+@media (min-width: 351px) and (max-width: 450px) {
+  	 .box{font-size: 65%; color: #FF0;}
+}
+
+@media (min-width: 451px) and (max-width: 550px) {
+  	 .box{font-size: 80%; color: #0FF;}
+}
+
+@media (min-width: 551px) and (max-width: 650px) {
+  	 .box{font-size: 100%; color: #00F;}
+}
+*/
+
+
+/********************************************************** 
+		Nedenstaaende tilfoejet af THAN 13-07-2015
+**********************************************************/
+
+.container, .container-fluid {
+    background-color: #fff;
+}
+
+
