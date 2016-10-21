@@ -97,7 +97,7 @@ $( document ).ready(function() {
 	});
 
 	// Naar vinduet loader rescales billederne:
-	$(window).load(function () {
+	$(document).ready(function() {
 		RescaleImage(".ImgWrapper", 1354, 760);
 		ResizeAndPositionOverlayWindow(".ImgWrapper", "#AntagonistArrow");
 		ResizeAndPositionOverlayWindow(".ImgWrapper", "#ProtagonistArrow");

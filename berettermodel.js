@@ -145,11 +145,11 @@
       } , 5000);
   }
 
-  //########################################################################
-  //                      Run code....
-  //########################################################################
+//########################################################################
+//                      Run code....
+//########################################################################
 
-  $( document ).ready(function() {
+// $( document ).ready(function() {
 
       var TimerId; 
 
@@ -165,131 +165,131 @@
       }
       console.log("--- ListArray 2 : " + ListArray);
 
-      // Naar vinduet loader rescales billedet og alle dropdownmenuer repositioneres:
-      $(window).load(function () {
-          // RescaleImage(".ImgWrapper", 840, 528);
-          // RepositionObjects(JsonCss ,".ImgWrapper", 840, 528);
-          RescaleImage(".ImgWrapper", 911, 400);
-          RepositionObjects(JsonCss ,".ImgWrapper", 911, 400);
-      });
-
-      // Naar reloader rescales billedet og alle dropdownmenuer repositioneres:
-      $(window).resize(function () {
-         // RescaleImage(".ImgWrapper", 840, 528);
-         // RepositionObjects(JsonCss ,".ImgWrapper", 840, 528);
-         RescaleImage(".ImgWrapper", 911, 400);
-         RepositionObjects(JsonCss ,".ImgWrapper", 911, 400);
-         // ResizeAndPositionOverlayWindow(".ImgWrapper", ".ImgOverlay");
-      });
-
-
+      
       // Default tekst er ens i alle elementer:
       var DefaultTextWidth = $( JsonCss[0].id + " a > span").width();
       var DefaultText = $( JsonCss[0].id + " a > span").text();
 
+// });
 
-
-      // Nedenstaaende udfoeres naar der trykkes paa et anchor-tag i dropdown menuerne:
-      $( document ).on('click', ".btn-group ul a", function(event){
-          event.preventDefault();  // Forhindre at anchor-tag'et sender brugeren til "href".
-          
-          var LinkText = $( this ).text();  // Teksten paa det link der 
-          var HeaderLinkObj = $( this ).closest( "ul" ).siblings("a");
-          var HeaderLinkText = $("> .MenuHeading", HeaderLinkObj).text();
-          console.log("LinkText: " + LinkText + ", HeaderLinkText: " + HeaderLinkText );
-
-          // Set teksten i dropdownmenuen til det valgte ord/saetning:
-          $("> .MenuHeading", HeaderLinkObj).text(LinkText);
-
-          // Foelgende finder bredden paa det valgte ord/saetning "TextWidth" og beregner
-          // en justering af teksten i forhold til bredden paa default teksten "DefaultTextWidth"
-          var DivObj = $( this ).closest( ".btn-group" ); // Referance til denne div.
-          var Num = $( ".ImgWrapper > div.Dmenu" ).index( DivObj );  // Nummeret paa denne div i .ImgWrapper.
-          var TextWidth = $("> a ", DivObj).width();  // Bredden paa a-tag'et.
-          var AjustWidth = Math.round( (DefaultTextWidth - TextWidth)/2 );
-          console.log("3 --- DivObj: " + DivObj.attr("id") + ", Num: " + Num + ", TextWidth: " + TextWidth );
-          JsonCss[Num].left_ajust = AjustWidth;  // Ret bredden i JsonCss left_ajust.
-          console.log("4 --- DivObj: " + DivObj.attr("id") + ", Num: " + Num + ", AjustWidth: " + AjustWidth );
-          // RepositionObjects(JsonCss ,".ImgWrapper", 840, 528);  // Juster teksten.
-          RepositionObjects(JsonCss ,".ImgWrapper", 911, 400);  // Juster teksten.
-
-          // Hvis et tidligere hint er synlig, saa skal det fjernes:
-          $( "#Hint" ).remove();
-          clearTimeout(TimerId);  // fjerner tidligere timere.
-
-          var ImgWrapperWidth = $(".ImgWrapper").width();
-
-          // Giver et hint:
-          for (var index in JsonHint) {
-              console.log("### LinkText: " + LinkText + ", JsonHint[index].answer: " + JsonHint[index].answer );
-              if ( LinkText == JsonHint[index].answer ){
-                  var HintText = JsonHint[index].hint;
-                  // var Offset = $(DivObj).offset();     // absolute
-                  var Position = $(DivObj).position();    // relative
-                  var Left = Position.left;
-                  var Top = Position.top;
-                  var DivHeight = DivObj.height();
-                  var Hint_Left = Math.round( Left - (HintText.length/2 - AjustWidth) );
-                  // Hint_Left = (Hint_Left > 0) ? Hint_Left : 10;  // sikre HintText position
-                  if ( (Hint_Left > 0) && (Hint_Left < ImgWrapperWidth - 320) )  // sikre HintText position
-                      Hint_Left = Hint_Left;
-                  else{
-                      if (Hint_Left <= 0)
-                          Hint_Left = 0;
-                      if (Hint_Left >= ImgWrapperWidth - 320)
-                          Hint_Left = ImgWrapperWidth - 320 - 0;
-                  }
-                  var Hint_Top = Math.round( Top + DivHeight );
-                  console.log("Left: " + Position.left + ", Top: " + Position.top + ", DivHeight: " + DivHeight + "\nHintText: " + HintText  + ", Hint_Left: " + Hint_Left );
-                  $( DivObj ).after( $('<div id="Hint" class="HintClass"> <span class="LukClass right glyphicon glyphicon-remove"></span><span class="clear"></span><h6>' + HintText + '</h6></div>').fadeIn("slow") );  // glyphicon glyphicon-remove
-                  $( "#Hint" ).css({ position: "absolute", top: Hint_Top+"px", left: Hint_Left+"px"});
-                  // SetTimerAndFadeout("#Hint");
-                  console.log(" TimerId 1 : " + TimerId );
-              }
-          }
-      });
-
-    
-      // Nedenstaaende udfoeres naar der trykkes paa kanppen "DONE":
-      $( document ).on('click', "#done", function(event){
-          
-          if ( $(".AnsClass").length === 0 ){  // Hvis correct/worg vises, saa skal der ikke tilfoejes flere correct/worg.
-
-              // Tael sammen hvor mange rigtige svar der er afgivet:
-              var count = 0;
-              $(".ImgWrapper .btn-group").each(function( index, element ) {
-                  var IdNumStr = (index + 1).toString();
-                  var DivObj = $( this ).closest( ".btn-group" ); 
-                  var AnsText = " Wrong ";
-                  if ( $(".MenuHeading", this).text() == JsonCss[index].answer ){
-                    ++count;
-                    AnsText = "Correct";
-                  } 
-                  var Position = $(DivObj).position();    // relative
-                  var Left = Position.left;
-                  var Top = Position.top;
-                  var DivHeight = DivObj.height();
-                  // var Ans_Left = Math.round( Left - AnsText.length + 30 );
-                  var Ans_Left = Math.round( Left );
-                  Ans_Left = (Ans_Left > 0) ? Ans_Left : 10;  // sikre AnsText position
-                  var Ans_Top = Math.round( Top - 1*DivHeight - DivHeight/3);  // MAMs design: DivHeight/3 == 10 px ved fuld bredde
-                  console.log("Left: " + Position.left + ", Top: " + Position.top + ", DivHeight: " + DivHeight + "\nAnsText: " + AnsText  + ", Ans_Left: " + Ans_Left );
-                  // $( DivObj ).before( $('<div id="Ans'+IdNumStr+'" class="AnsClass Red">'+AnsText+'</div>').fadeIn("slow") );
-                  $( DivObj ).before( $('<a id="Ans'+IdNumStr+'" class="AnsClass btn btn-danger btn-sm btn-autosize">'+AnsText+'</a>').fadeIn("slow") );
-                  $( "#Ans"+IdNumStr ).css({ position: "absolute", top: Ans_Top+"px", left: Ans_Left+"px"});
-                  if (AnsText == "Correct") $("#Ans"+IdNumStr).toggleClass( "btn-danger btn-success" ); // Skift til groen
-                  SetTimerAndFadeout(".AnsClass");
-                  console.log(" TimerId 2 : " + TimerId );
-              });
-          }
-      });
-
-      // Naar der klikkes paa "Hint"-teksten skal "Hint"-tekst boksen lukkes:
-      $(document).on('click', ".HintClass", function(event) {
-          // event.preventDefault();
-          $(".HintClass").fadeOut("fast", function() {
-             $(".HintClass").remove();
-          });
-      });
-
+  // Naar vinduet loader rescales billedet og alle dropdownmenuer repositioneres:
+  $( document ).ready(function() {
+      // RescaleImage(".ImgWrapper", 840, 528);
+      // RepositionObjects(JsonCss ,".ImgWrapper", 840, 528);
+      RescaleImage(".ImgWrapper", 911, 400);
+      RepositionObjects(JsonCss ,".ImgWrapper", 911, 400);
   });
+
+  // Naar reloader rescales billedet og alle dropdownmenuer repositioneres:
+  $(window).resize(function () {
+     // RescaleImage(".ImgWrapper", 840, 528);
+     // RepositionObjects(JsonCss ,".ImgWrapper", 840, 528);
+     RescaleImage(".ImgWrapper", 911, 400);
+     RepositionObjects(JsonCss ,".ImgWrapper", 911, 400);
+     // ResizeAndPositionOverlayWindow(".ImgWrapper", ".ImgOverlay");
+  });
+
+
+  // Nedenstaaende udfoeres naar der trykkes paa et anchor-tag i dropdown menuerne:
+  $( document ).on('click', ".btn-group ul a", function(event){
+      event.preventDefault();  // Forhindre at anchor-tag'et sender brugeren til "href".
+      
+      var LinkText = $( this ).text();  // Teksten paa det link der 
+      var HeaderLinkObj = $( this ).closest( "ul" ).siblings("a");
+      var HeaderLinkText = $("> .MenuHeading", HeaderLinkObj).text();
+      console.log("LinkText: " + LinkText + ", HeaderLinkText: " + HeaderLinkText );
+
+      // Set teksten i dropdownmenuen til det valgte ord/saetning:
+      $("> .MenuHeading", HeaderLinkObj).text(LinkText);
+
+      // Foelgende finder bredden paa det valgte ord/saetning "TextWidth" og beregner
+      // en justering af teksten i forhold til bredden paa default teksten "DefaultTextWidth"
+      var DivObj = $( this ).closest( ".btn-group" ); // Referance til denne div.
+      var Num = $( ".ImgWrapper > div.Dmenu" ).index( DivObj );  // Nummeret paa denne div i .ImgWrapper.
+      var TextWidth = $("> a ", DivObj).width();  // Bredden paa a-tag'et.
+      var AjustWidth = Math.round( (DefaultTextWidth - TextWidth)/2 );
+      console.log("3 --- DivObj: " + DivObj.attr("id") + ", Num: " + Num + ", TextWidth: " + TextWidth );
+      JsonCss[Num].left_ajust = AjustWidth;  // Ret bredden i JsonCss left_ajust.
+      console.log("4 --- DivObj: " + DivObj.attr("id") + ", Num: " + Num + ", AjustWidth: " + AjustWidth );
+      // RepositionObjects(JsonCss ,".ImgWrapper", 840, 528);  // Juster teksten.
+      RepositionObjects(JsonCss ,".ImgWrapper", 911, 400);  // Juster teksten.
+
+      // Hvis et tidligere hint er synlig, saa skal det fjernes:
+      $( "#Hint" ).remove();
+      clearTimeout(TimerId);  // fjerner tidligere timere.
+
+      var ImgWrapperWidth = $(".ImgWrapper").width();
+
+      // Giver et hint:
+      for (var index in JsonHint) {
+          console.log("### LinkText: " + LinkText + ", JsonHint[index].answer: " + JsonHint[index].answer );
+          if ( LinkText == JsonHint[index].answer ){
+              var HintText = JsonHint[index].hint;
+              // var Offset = $(DivObj).offset();     // absolute
+              var Position = $(DivObj).position();    // relative
+              var Left = Position.left;
+              var Top = Position.top;
+              var DivHeight = DivObj.height();
+              var Hint_Left = Math.round( Left - (HintText.length/2 - AjustWidth) );
+              // Hint_Left = (Hint_Left > 0) ? Hint_Left : 10;  // sikre HintText position
+              if ( (Hint_Left > 0) && (Hint_Left < ImgWrapperWidth - 320) )  // sikre HintText position
+                  Hint_Left = Hint_Left;
+              else{
+                  if (Hint_Left <= 0)
+                      Hint_Left = 0;
+                  if (Hint_Left >= ImgWrapperWidth - 320)
+                      Hint_Left = ImgWrapperWidth - 320 - 0;
+              }
+              var Hint_Top = Math.round( Top + DivHeight );
+              console.log("Left: " + Position.left + ", Top: " + Position.top + ", DivHeight: " + DivHeight + "\nHintText: " + HintText  + ", Hint_Left: " + Hint_Left );
+              $( DivObj ).after( $('<div id="Hint" class="HintClass"> <span class="LukClass right glyphicon glyphicon-remove"></span><span class="clear"></span><h6>' + HintText + '</h6></div>').fadeIn("slow") );  // glyphicon glyphicon-remove
+              $( "#Hint" ).css({ position: "absolute", top: Hint_Top+"px", left: Hint_Left+"px"});
+              // SetTimerAndFadeout("#Hint");
+              console.log(" TimerId 1 : " + TimerId );
+          }
+      }
+  });
+
+
+  // Nedenstaaende udfoeres naar der trykkes paa kanppen "DONE":
+  $( document ).on('click', "#done", function(event){
+      
+      if ( $(".AnsClass").length === 0 ){  // Hvis correct/worg vises, saa skal der ikke tilfoejes flere correct/worg.
+
+          // Tael sammen hvor mange rigtige svar der er afgivet:
+          var count = 0;
+          $(".ImgWrapper .btn-group").each(function( index, element ) {
+              var IdNumStr = (index + 1).toString();
+              var DivObj = $( this ).closest( ".btn-group" ); 
+              var AnsText = " Wrong ";
+              if ( $(".MenuHeading", this).text() == JsonCss[index].answer ){
+                ++count;
+                AnsText = "Correct";
+              } 
+              var Position = $(DivObj).position();    // relative
+              var Left = Position.left;
+              var Top = Position.top;
+              var DivHeight = DivObj.height();
+              // var Ans_Left = Math.round( Left - AnsText.length + 30 );
+              var Ans_Left = Math.round( Left );
+              Ans_Left = (Ans_Left > 0) ? Ans_Left : 10;  // sikre AnsText position
+              var Ans_Top = Math.round( Top - 1*DivHeight - DivHeight/3);  // MAMs design: DivHeight/3 == 10 px ved fuld bredde
+              console.log("Left: " + Position.left + ", Top: " + Position.top + ", DivHeight: " + DivHeight + "\nAnsText: " + AnsText  + ", Ans_Left: " + Ans_Left );
+              // $( DivObj ).before( $('<div id="Ans'+IdNumStr+'" class="AnsClass Red">'+AnsText+'</div>').fadeIn("slow") );
+              $( DivObj ).before( $('<a id="Ans'+IdNumStr+'" class="AnsClass btn btn-danger btn-sm btn-autosize">'+AnsText+'</a>').fadeIn("slow") );
+              $( "#Ans"+IdNumStr ).css({ position: "absolute", top: Ans_Top+"px", left: Ans_Left+"px"});
+              if (AnsText == "Correct") $("#Ans"+IdNumStr).toggleClass( "btn-danger btn-success" ); // Skift til groen
+              SetTimerAndFadeout(".AnsClass");
+              console.log(" TimerId 2 : " + TimerId );
+          });
+      }
+  });
+
+  // Naar der klikkes paa "Hint"-teksten skal "Hint"-tekst boksen lukkes:
+  $(document).on('click', ".HintClass", function(event) {
+      // event.preventDefault();
+      $(".HintClass").fadeOut("fast", function() {
+         $(".HintClass").remove();
+      });
+  });
+
