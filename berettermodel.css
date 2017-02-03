@@ -61,6 +61,10 @@
 
     .MenuHeading{margin-right: 6px; font-size: 14px;}
 
+    .dropdown-toggle{  /* Added 03-02-2017 */
+      margin-bottom: 0px;
+    }
+
 
     a{color: black;}
     a.btn {
@@ -130,6 +134,11 @@
     .dropdown-menu{
       min-width: auto;  /* Overwrite en default min-width paa 160px */
       background-color: rgba(248, 248, 246, 0.9);
+    }
+
+    .dropdown-menu h5{  /* Added 03-02-2017 */
+        margin-top: 3px;
+        margin-bottom: 3px;
     }
 
     .UserManual{margin-left: auto; margin-right: auto; 

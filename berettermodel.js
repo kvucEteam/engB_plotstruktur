@@ -270,16 +270,20 @@
               var Left = Position.left;
               var Top = Position.top;
               var DivHeight = DivObj.height();
+              console.log("DivHeight: " + DivHeight );
+              var DivWidth = DivObj.width();   // Added by THAN 03-02-2017
               // var Ans_Left = Math.round( Left - AnsText.length + 30 );
               var Ans_Left = Math.round( Left );
               Ans_Left = (Ans_Left > 0) ? Ans_Left : 10;  // sikre AnsText position
-              var Ans_Top = Math.round( Top - 1*DivHeight - DivHeight/3);  // MAMs design: DivHeight/3 == 10 px ved fuld bredde
+              // var Ans_Top = Math.round( Top - 1*DivHeight - DivHeight/3);  // MAMs design: DivHeight/3 == 10 px ved fuld bredde. //<---- Commented out 03-02-2017
+              var Ans_Top = Math.round( Top - DivHeight/1.5);  // MAMs design: DivHeight/3 == 10 px ved fuld bredden.   //<---- Added 03-02-2017
               console.log("Left: " + Position.left + ", Top: " + Position.top + ", DivHeight: " + DivHeight + "\nAnsText: " + AnsText  + ", Ans_Left: " + Ans_Left );
               // $( DivObj ).before( $('<div id="Ans'+IdNumStr+'" class="AnsClass Red">'+AnsText+'</div>').fadeIn("slow") );
               $( DivObj ).before( $('<a id="Ans'+IdNumStr+'" class="AnsClass btn btn-danger btn-sm btn-autosize">'+AnsText+'</a>').fadeIn("slow") );
-              $( "#Ans"+IdNumStr ).css({ position: "absolute", top: Ans_Top+"px", left: Ans_Left+"px"});
+              // $( "#Ans"+IdNumStr ).css({ position: "absolute", top: Ans_Top+"px", left: Ans_Left+"px"});                    //<--------- Commented out 03-02-2017
+              $( "#Ans"+IdNumStr ).css({ position: "absolute", top: Ans_Top+"px", left: String(Ans_Left+DivWidth*0.2)+"px"});  //<--------- Added 03-02-2017
               if (AnsText == "Correct") $("#Ans"+IdNumStr).toggleClass( "btn-danger btn-success" ); // Skift til groen
-              SetTimerAndFadeout(".AnsClass");
+              SetTimerAndFadeout(".AnsClass");      // <--------- Commented out as test 03-02-2017
               console.log(" TimerId 2 : " + TimerId );
           });
       }
